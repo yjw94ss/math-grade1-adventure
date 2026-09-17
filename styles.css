@@ -128,7 +128,22 @@ main{max-width:720px;margin:0 auto;padding:12px 12px 48px}
 #wrongList li{background:#FFF1F3;border:2px solid #FFC2CE;border-radius:10px;margin:6px 0;
   padding:6px 12px;list-style:none;font-size:15px}
 
-/* 年级大厅 */
+/* 示例广告位 */
+.ad-slot{position:relative;display:flex;align-items:center;gap:12px;
+  background:linear-gradient(135deg,#FFFDF4,#FFF6DE);border:2px dashed #E3C97E;text-align:left}
+.ad-badge{position:absolute;top:8px;left:10px;font-size:12px;font-weight:900;color:#8A6D1B;
+  border:1.5px solid #C9A93F;border-radius:6px;padding:1px 7px;background:#FFF9E6}
+.ad-close{position:absolute;top:6px;right:8px;width:28px;height:28px;border-radius:50%;
+  border:2px solid #D8C48A;background:#fff;color:#8A6D1B;font-size:16px;font-weight:900;
+  cursor:pointer;line-height:1}
+.ad-emoji{font-size:42px;margin-top:10px}
+.ad-body{flex:1;min-width:0;margin-top:12px}
+.ad-title{font-size:17px;font-weight:900}
+.ad-desc{font-size:13px;color:var(--muted);margin-top:2px}
+.ad-cta{flex:0 0 auto;font-size:14px;font-weight:900;color:#fff;border:0;border-radius:999px;
+  padding:10px 16px;cursor:pointer;background:linear-gradient(135deg,#F0B429,#D99A00);
+  box-shadow:0 3px 0 rgba(0,0,0,.15);margin-top:12px}
+.ad-cta:active{transform:translateY(2px);box-shadow:none}
 .grade-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:14px 0}
 .grade-card{display:block;text-decoration:none;color:#fff;border-radius:22px;
   padding:22px 14px 18px;text-align:center;box-shadow:0 8px 20px rgba(0,0,0,.15);

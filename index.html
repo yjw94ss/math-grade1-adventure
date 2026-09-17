@@ -23,6 +23,7 @@
   </div>
 </main>
 <footer>本地运行，无需联网 · 进度保存在本机浏览器</footer>
+<script src="ads.js"></script>
 <script>
 const GRADES = [
   { n: 1, emoji: "🐣", topics: "凑十 · 20以内加减 · 钟表 · 图形", key: "mathAdv1" },
@@ -37,6 +38,7 @@ document.getElementById("grades").innerHTML = GRADES.map((g) =>
   `<a class="grade-card" href="grade${g.n}.html"><div class="g-emoji">${g.emoji}</div><div class="g-name">${g.n}年级</div><div class="g-topics">${g.topics}</div><div class="g-stars">⭐ ${total(g.key)}</div></a>`
 ).join("");
 document.getElementById("starAll").textContent = GRADES.reduce((s, g) => s + total(g.key), 0);
+if (window.AdSlot) window.AdSlot.mountHub(document.getElementById("grades")); // 示例广告位（演示用）
 </script>
 </body>
 </html>

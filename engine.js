@@ -123,6 +123,7 @@ addTab("home", "🏠 今天玩什么", true);
   tc.querySelector("#btnNewTasks").onclick = newTasks;
   newTasks();
   card(p, `<div class="card tip" style="box-shadow:none;margin:0;padding:0"><h2>💡 家长3句话</h2><p>“你怎么想的？”“还有别的方法吗？”“错了也没事，我们看看卡在哪。”</p></div>`);
+  if (window.AdSlot) window.AdSlot.mountHome(p); // 示例广告位（演示用）
 })();
 
 // ---------- 标准模块 ----------
