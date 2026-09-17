@@ -60,5 +60,15 @@ main{max-width:720px;margin:0 auto;padding:12px 12px 40px}
 #clockCanvas{display:block;margin:0 auto;background:#fff;border-radius:50%}
 .plist{line-height:2;font-size:16px}
 .hint{color:#777;font-size:14px;text-align:center}
+.home-link{text-decoration:none;font-weight:800;color:var(--orange);font-size:16px;white-space:nowrap}
+.grade-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:12px 0}
+.grade-card{display:block;text-decoration:none;color:inherit;background:#fff;border-radius:18px;
+  padding:18px 14px;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,.06);border:3px solid transparent}
+.grade-card:active{transform:scale(.97);border-color:var(--orange)}
+.g-emoji{font-size:44px}
+.g-name{font-size:22px;font-weight:800;margin:6px 0}
+.g-topics{font-size:13px;color:#777;min-height:36px}
+.g-stars{font-size:16px;font-weight:800;margin-top:6px}
+@media(max-width:420px){.grade-grid{grid-template-columns:1fr 1fr}.g-topics{font-size:12px}}
 .tip{background:#FFF1F3}
 footer{text-align:center;color:#999;font-size:13px;padding:18px}

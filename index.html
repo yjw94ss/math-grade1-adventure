@@ -3,210 +3,40 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>数学小探险家 · 一年级</title>
+<title>数学小探险家 · 年级大厅</title>
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 <header class="topbar">
   <div class="logo">🧭 数学小探险家</div>
-  <div class="passport-mini">⭐ <span id="starTotal">0</span> <small>探险星</small></div>
+  <div class="passport-mini">⭐ <span id="starAll">0</span> <small>全年级</small></div>
 </header>
-
-<nav class="tabs" id="tabs">
-  <button data-tab="home" class="active">🏠 今天玩什么</button>
-  <button data-tab="ten">🔟 凑十挑战</button>
-  <button data-tab="calc">🚂 加减小火车</button>
-  <button data-tab="clock">🕐 钟表侦探</button>
-  <button data-tab="shape">🔷 图形乐园</button>
-  <button data-tab="compare">⚖️ 比大小</button>
-  <button data-tab="pattern">🔍 找规律</button>
-  <button data-tab="money">🛒 小小商店</button>
-  <button data-tab="quest">🏆 闯关10题</button>
-  <button data-tab="passport">🛂 我的护照</button>
-</nav>
-
-<main>
-  <!-- 首页 -->
-  <section id="tab-home" class="panel active">
-    <div class="card hero">
-      <h1>每天15分钟，玩着学数学</h1>
-      <p>一年级 · 数感 → 计算 → 生活数学，不刷题、不计时、不批评。</p>
-      <div class="steps">
-        <div><b>3分钟</b><span>热身骰子</span></div>
-        <div><b>7分钟</b><span>1个新挑战</span></div>
-        <div><b>5分钟</b><span>生活小任务</span></div>
-      </div>
-      <button class="big-btn" id="btnWarmup">🎲 开始3分钟热身</button>
-      <div id="warmupArea" class="game-area hidden">
-        <div class="dice-row">
-          <div class="dice" id="diceA">⚀</div>
-          <div class="vs">VS</div>
-          <div class="dice" id="diceB">⚅</div>
-        </div>
-        <p id="warmupQ">哪个大？点一点！</p>
-        <div class="row">
-          <button class="opt" id="warmLeft">左边大</button>
-          <button class="opt" id="warmRight">右边大</button>
-          <button class="opt" id="warmEqual">一样大</button>
-        </div>
-        <p id="warmupMsg" class="msg"></p>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>📋 今日探险任务（家长读一遍）</h2>
-      <ol id="todayTasks" class="tasks"></ol>
-      <button class="small-btn" id="btnNewTasks">🔄 换一组任务</button>
-    </div>
-
-    <div class="card tip">
-      <h2>💡 家长3句话</h2>
-      <p>“你怎么想的？”“还有别的方法吗？”“错了也没事，我们看看卡在哪。”</p>
-    </div>
-  </section>
-
-  <!-- 凑十 -->
-  <section id="tab-ten" class="panel">
-    <div class="card">
-      <h2>🔟 凑十挑战：看到几，就想差几凑成10</h2>
-      <div class="big-num" id="tenNum">6</div>
-      <p>6 + <b>?</b> = 10，按正确答案：</p>
-      <div class="row" id="tenOpts"></div>
-      <p id="tenMsg" class="msg"></p>
-      <div class="dots" id="tenDots"></div>
-    </div>
-  </section>
-
-  <!-- 加减 -->
-  <section id="tab-calc" class="panel">
-    <div class="card">
-      <h2>🚂 加减小火车</h2>
-      <div class="row">
-        <label><input type="radio" name="level" value="10" checked /> 10以内</label>
-        <label><input type="radio" name="level" value="20" /> 20以内进位/退位</label>
-      </div>
-      <div class="big-num" id="calcQ">3 + 4 = ?</div>
-      <div class="dots" id="calcDots"></div>
-      <div class="pad" id="calcPad"></div>
-      <p id="calcMsg" class="msg"></p>
-    </div>
-  </section>
-
-  <!-- 钟表 -->
-  <section id="tab-clock" class="panel">
-    <div class="card">
-      <h2>🕐 钟表小侦探：只考整时和半时</h2>
-      <canvas id="clockCanvas" width="220" height="220"></canvas>
-      <p>现在是几点？</p>
-      <div class="row" id="clockOpts"></div>
-      <p id="clockMsg" class="msg"></p>
-    </div>
-  </section>
-
-  <!-- 图形 -->
-  <section id="tab-shape" class="panel">
-    <div class="card">
-      <h2>🔷 图形乐园：认一认、找一找</h2>
-      <div class="big-num" id="shapeShow">🔺</div>
-      <p id="shapeQ">这个图形叫什么？</p>
-      <div class="row" id="shapeOpts"></div>
-      <p id="shapeMsg" class="msg"></p>
-      <p class="hint">生活找一找：家里哪里有圆形 / 长方形？找到+1⭐</p>
-    </div>
-  </section>
-
-  <!-- 比大小 -->
-  <section id="tab-compare" class="panel">
-    <div class="card">
-      <h2>⚖️ 比大小：填 &gt; &lt; =</h2>
-      <div class="row">
-        <label><input type="radio" name="cmpLevel" value="num" checked /> 数字比</label>
-        <label><input type="radio" name="cmpLevel" value="expr" /> 算式比</label>
-      </div>
-      <div class="big-num small" id="cmpQ">7 ? 9</div>
-      <div class="row" id="cmpOpts"></div>
-      <p id="cmpMsg" class="msg"></p>
-      <p class="hint">开口朝大数：7 &lt; 9，尖尖对小数</p>
-    </div>
-  </section>
-
-  <!-- 找规律 -->
-  <section id="tab-pattern" class="panel">
-    <div class="card">
-      <h2>🔍 找规律：后面该是谁？</h2>
-      <div class="row">
-        <label><input type="radio" name="patLevel" value="seq" checked /> 数字列</label>
-        <label><input type="radio" name="patLevel" value="makeup" /> 数的组成</label>
-      </div>
-      <div class="big-num small" id="patQ">2、4、6、?</div>
-      <div class="row" id="patOpts"></div>
-      <p id="patMsg" class="msg"></p>
-    </div>
-  </section>
-
-  <!-- 小商店 -->
-  <section id="tab-money" class="panel">
-    <div class="card">
-      <h2>🛒 小小商店：认识元角分</h2>
-      <div class="row">
-        <label><input type="radio" name="moneyLevel" value="know" checked /> 认钱换钱</label>
-        <label><input type="radio" name="moneyLevel" value="shop" /> 买东西算账</label>
-      </div>
-      <div class="big-num small" id="moneyQ">1元 = ? 角</div>
-      <div class="shop" id="moneyShop"></div>
-      <div class="row" id="moneyOpts"></div>
-      <p id="moneyMsg" class="msg"></p>
-    </div>
-  </section>
-
-  <!-- 闯关 -->
-  <section id="tab-quest" class="panel">
-    <div class="card">
-      <h2>🏆 闯关10题：混合大挑战</h2>
-      <p class="hint">凑十 + 加减 + 比大小 + 规律 + 人民币，每关随机抽，不重复刷题</p>
-      <div class="progress"><div id="questBar"></div></div>
-      <p id="questInfo">还没开始，第 0/10 题，连击 x0</p>
-      <div class="big-num small" id="questQ">点开始吧！</div>
-      <div class="row" id="questOpts"></div>
-      <p id="questMsg" class="msg"></p>
-      <div class="row">
-        <button class="big-btn" id="btnQuest">🚀 开始闯关</button>
-      </div>
-    </div>
-    <div class="card">
-      <h2>📝 错题本（只记闯关错的）</h2>
-      <ul id="wrongList" class="plist"></ul>
-      <div class="row">
-        <button class="small-btn" id="btnWrongRetry">🔁 重练错题</button>
-        <button class="small-btn danger" id="btnWrongClear">🗑 清空错题</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- 护照 -->
-  <section id="tab-passport" class="panel">
-    <div class="card">
-      <h2>🛂 我的探险护照</h2>
-      <p>总星星：<b id="pTotal">0</b> ⭐</p>
-      <ul id="pList" class="plist"></ul>
-      <div class="row">
-        <button class="small-btn" id="btnSpeak">🔊 读出表扬</button>
-        <button class="small-btn danger" id="btnReset">🗑 清零重来</button>
-      </div>
-    </div>
-    <div class="card">
-      <h2>🗓 12周路线图</h2>
-      <ol class="tasks small">
-        <li>1-4周：数到20，10的分合，加减含义</li>
-        <li>5-8周：认识11-20，凑十加、破十减，图形位置</li>
-        <li>9-12周：钟表、100以内数、人民币、找规律</li>
-      </ol>
-      <p class="hint">每周记录一句：能摆出来讲清吗？愿意再试一次吗？</p>
-    </div>
-  </section>
+<main style="max-width:720px;margin:0 auto;padding:12px 12px 40px">
+  <div class="card hero">
+    <h1>选一个年级，开始探险！</h1>
+    <p>1-6 年级 · 每天15分钟：3分钟热身 + 7分钟挑战 + 5分钟生活任务</p>
+  </div>
+  <div class="grade-grid" id="grades"></div>
+  <div class="card tip">
+    <h2>💡 给家长</h2>
+    <p>每个年级进度独立保存；先从孩子所在年级开始，吃力就退回上一年级玩几天，不丢人。</p>
+  </div>
 </main>
-
-<footer>本地运行，无需联网 · 进度保存在本机浏览器 · 到点就停，留点想头</footer>
-<script src="app.js"></script>
+<footer>本地运行，无需联网 · 进度保存在本机浏览器</footer>
+<script>
+const GRADES = [
+  { n: 1, emoji: "🐣", topics: "凑十 · 20以内加减 · 钟表 · 图形", key: "mathAdv1" },
+  { n: 2, emoji: "🐥", topics: "100以内笔算 · 口诀 · 混合运算 · 万以内数", key: "mathAdv2" },
+  { n: 3, emoji: "🐤", topics: "万以内加减 · 时分秒 · 周长 · 分数初步 · 倍", key: "mathAdv3" },
+  { n: 4, emoji: "🦊", topics: "大数 · 笔算乘除 · 运算定律 · 小数 · 平均数", key: "mathAdv4" },
+  { n: 5, emoji: "🐯", topics: "小数乘除 · 方程 · 面积 · 因数倍数 · 分数 · 体积", key: "mathAdv5" },
+  { n: 6, emoji: "🦁", topics: "分数乘除 · 比与比例 · 百分数 · 圆 · 圆柱圆锥", key: "mathAdv6" }
+];
+const total = (k) => { try { return JSON.parse(localStorage.getItem(k) || "{}").total || 0; } catch { return 0; } };
+document.getElementById("grades").innerHTML = GRADES.map((g) =>
+  `<a class="grade-card" href="grade${g.n}.html"><div class="g-emoji">${g.emoji}</div><div class="g-name">${g.n}年级</div><div class="g-topics">${g.topics}</div><div class="g-stars">⭐ ${total(g.key)}</div></a>`
+).join("");
+document.getElementById("starAll").textContent = GRADES.reduce((s, g) => s + total(g.key), 0);
+</script>
 </body>
 </html>
