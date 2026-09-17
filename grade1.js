@@ -92,8 +92,8 @@ const GRADE = {
             const b = document.createElement("button");
             b.className = "opt"; b.textContent = v;
             b.onclick = () => {
-              if (v === ans) { box.msg.textContent = "小侦探破案啦！🔍 " + addStar("clock"); box.msg.className = "msg good"; speak("时间看对了"); setTimeout(next, 900); }
-              else { box.msg.textContent = "看看长针指着12还是6？🕐"; box.msg.className = "msg bad"; }
+              if (v === ans) { b.classList.add("correct"); box.msg.textContent = "小侦探破案啦！🔍 " + addStar("clock"); box.msg.className = "msg good"; speak("时间看对了"); setTimeout(next, 900); }
+              else { b.classList.add("wrong"); setTimeout(() => b.classList.remove("wrong"), 650); box.msg.textContent = "看看长针指着12还是6？🕐"; box.msg.className = "msg bad"; }
             };
             box.opts.appendChild(b);
           });

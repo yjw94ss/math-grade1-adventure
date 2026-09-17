@@ -7,6 +7,7 @@
 (function () {
 "use strict";
 if (typeof GRADE === "undefined") { document.body.innerHTML = "<p>缺少年级配置 GRADE</p>"; return; }
+document.body.dataset.grade = GRADE.n;
 
 // ---------- 工具 ----------
 const H = {
@@ -139,10 +140,14 @@ function paintOpts(mod, box, q) {
     b.className = "opt"; b.textContent = v;
     b.onclick = () => {
       if (String(v) === String(q.a)) {
+        b.classList.add("correct");
         box.msg.textContent = H.pick(["答对啦！🎉 ", "太厉害了！🎉 ", "完全正确！🎉 "]) + addStar(mod.id);
         box.msg.className = "msg good"; speak("答对了");
         setTimeout(() => mod._next(box, q.q), 900);
-      } else { box.msg.textContent = (mod.retry || "再想一想 💪"); box.msg.className = "msg bad"; }
+      } else {
+        b.classList.add("wrong"); setTimeout(() => b.classList.remove("wrong"), 650);
+        box.msg.textContent = (mod.retry || "再想一想 💪"); box.msg.className = "msg bad";
+      }
     };
     box.opts.appendChild(b);
   });
@@ -183,10 +188,14 @@ GRADE.modules.forEach((mod) => {
       b.textContent = i;
       b.onclick = () => {
         if (i === box.padAns) {
+          b.classList.add("correct");
           box.msg.textContent = "答对啦！🎉 " + addStar(mod.id);
           box.msg.className = "msg good"; speak("答对了");
           setTimeout(() => mod._next(), 900);
-        } else { box.msg.textContent = (mod.retry || "再摆一摆试试 💪"); box.msg.className = "msg bad"; }
+        } else {
+          b.classList.add("wrong"); setTimeout(() => b.classList.remove("wrong"), 650);
+          box.msg.textContent = (mod.retry || "再摆一摆试试 💪"); box.msg.className = "msg bad";
+        }
       };
       pad.appendChild(b);
     }
