@@ -367,6 +367,38 @@ GRADE.modules.forEach((mod) => {
   mod._next(box);
 });
 
+// ---------- 公式手册 ----------
+addTab("doc", "📖 公式手册");
+(function docs() {
+  const p = addPanel("doc");
+  const c = card(p, `<h2>📖 ${GRADE.title}公式手册</h2><input id="formulaSearch" class="formula-search" placeholder="🔍 搜公式，如：面积 / 勾股 / 方程" /><div id="formulaList"></div>`);
+  const fl = c.querySelector("#formulaList");
+  (GRADE.formulas || []).forEach((g) => {
+    const gd = document.createElement("div");
+    gd.className = "formula-group";
+    gd.innerHTML = `<h3>${g.title}</h3>`;
+    g.items.forEach((it) => {
+      const d = document.createElement("div");
+      d.className = "formula-item";
+      d.innerHTML = `<div class="f-name">${it.name}</div><div class="f-expr">${it.html ? it.html : pretty(it.expr)}</div>` + (it.note ? `<div class="f-note">${it.note}</div>` : "");
+      gd.appendChild(d);
+    });
+    fl.appendChild(gd);
+  });
+  c.querySelector("#formulaSearch").addEventListener("input", (e) => {
+    const k = e.target.value.trim();
+    fl.querySelectorAll(".formula-group").forEach((gd) => {
+      let vis = 0;
+      gd.querySelectorAll(".formula-item").forEach((d) => {
+        const show = !k || d.textContent.includes(k);
+        d.style.display = show ? "" : "none";
+        if (show) vis++;
+      });
+      gd.style.display = vis ? "" : "none";
+    });
+  });
+})();
+
 // ---------- 闯关 ----------
 const QN = GRADE.questCount || 10;
 addTab("quest", `🏆 闯关${QN}题`);

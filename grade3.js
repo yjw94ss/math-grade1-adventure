@@ -173,5 +173,27 @@ const GRADE = {
     () => { const d = H.pick([5, 6, 7, 8]); const a = H.ri(1, d - 2); let b = H.ri(1, d - 2); if (a === b) b = b % (d - 1) + 1; return { q: `${a}/${d} ? ${b}/${d}`, a: a > b ? "＞" : "＜", opts: ["＞", "＜", "="] }; },
     () => { const s = H.ri(3, 12); return { q: `边长${s}的正方形周长 ?`, a: s * 4, opts: H.salt([s * 4], s * 4 - 8, s * 4 + 8) }; },
     () => { const s = H.ri(2, 9), m = H.ri(2, 5); return { q: `${s * m}是${s}的几倍？`, a: m, opts: H.salt([m], 1, 12) }; }
+  ],
+  formulas: [
+    { title: "⏰ 时间", items: [
+      { name: "时分秒", expr: "1时＝60分，1分＝60秒" }
+    ] },
+    { title: "📐 长度与质量", items: [
+      { name: "长度", expr: "1米＝10分米＝100厘米＝1000毫米" },
+      { name: "千米", expr: "1千米＝1000米" },
+      { name: "质量", expr: "1吨＝1000千克，1千克＝1000克" }
+    ] },
+    { title: "🏗️ 周长", items: [
+      { name: "长方形", expr: "周长＝(长＋宽)×2" },
+      { name: "正方形", expr: "周长＝边长×4" }
+    ] },
+    { title: "🍰 分数", items: [
+      { name: "同分母加减", expr: "分母不变，分子相加减" },
+      { name: "比较", expr: "分母相同比分子；分子相同，分母小的反而大", note: "一定要先平均分" }
+    ] },
+    { title: "🐘 倍", items: [
+      { name: "求倍数", expr: "求一个数是另一个数的几倍，用除法" },
+      { name: "求几倍数", expr: "求一个数的几倍是多少，用乘法" }
+    ] }
   ]
 };

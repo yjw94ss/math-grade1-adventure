@@ -170,5 +170,29 @@ const GRADE = {
     () => { const a = H.pick([40, 50, 60, 70]), b = H.pick([50, 60, 70, 80]); if (a + b >= 170) return { q: "等边三角形每个角 ?°", a: "60°", opts: ["60°", "90°", "45°", "180°"] }; return { q: `三角形${a}°和${b}°，第三个 ?°`, a: (180 - a - b) + "°", opts: H.salt([180 - a - b], 10, 120).map((v) => v + "°") }; },
     () => { const t = H.pick([125, 25]); const x = t === 125 ? 8 : 4; const y = H.ri(3, 9); return { q: `${t} × ${x} × ${y} = ?`, a: t * x * y, opts: H.salt([t * x * y], t * x * y - 200, t * x * y + 200) }; },
     () => { const avg = H.ri(10, 25); const arr = [avg - 2, avg + 1, avg + 1]; return { q: `${arr.join("、")}平均 ?`, a: avg, opts: H.salt([avg], avg - 5, avg + 5) }; }
+  ],
+  formulas: [
+    { title: "🔢 大数", items: [
+      { name: "数级", expr: "每4位为一级：个级、万级、亿级" },
+      { name: "改写成万", expr: "去掉末尾4个0，加一个万字" }
+    ] },
+    { title: "⚖️ 运算定律", items: [
+      { name: "加法交换律", expr: "a+b=b+a" },
+      { name: "加法结合律", expr: "(a+b)+c=a+(b+c)" },
+      { name: "乘法交换律", expr: "a×b=b×a" },
+      { name: "乘法结合律", expr: "(a×b)×c=a×(b×c)" },
+      { name: "乘法分配律", expr: "(a+b)×c=a×c+b×c" }
+    ] },
+    { title: "📐 角", items: [
+      { name: "三种角", expr: "1直角＝90°，1平角＝180°，1周角＝360°" },
+      { name: "换算", expr: "1平角＝2个直角，1周角＝2个平角" }
+    ] },
+    { title: "🔺 三角形", items: [
+      { name: "内角和", expr: "三角形内角和＝180°" }
+    ] },
+    { title: "💧 小数与平均数", items: [
+      { name: "小数加减", expr: "小数点对齐再算" },
+      { name: "平均数", expr: "平均数＝总数÷份数" }
+    ] }
   ]
 };

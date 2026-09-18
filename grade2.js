@@ -173,5 +173,24 @@ const GRADE = {
     () => { const a = H.ri(2, 9), b = H.ri(2, 9), c = H.ri(2, 15); return { q: `${a} × ${b} + ${c} = ?`, a: a * b + c, opts: H.salt([a * b + c], a * b + c - 10, a * b + c + 10) }; },
     () => { const a = 100 * H.ri(1, 9), b = 100 * H.ri(1, 9); return { q: `${a} + ${b} = ?`, a: a + b, opts: H.salt([a + b], a + b - 400, a + b + 400) }; },
     () => { const T = H.ri(35, 99), b = H.ri(12, 29), a = T - b; if (a < 10 || a > 99) return { q: "4□+27=69，□=?", a: 4, opts: [4, 2, 6, 9] }; const s = String(a); return Math.random() < 0.5 ? { q: `□${s[1]}+${b}=${T}，□=?`, a: Number(s[0]), opts: H.salt([Number(s[0])], 0, 9) } : { q: `${s[0]}□+${b}=${T}，□=?`, a: Number(s[1]), opts: H.salt([Number(s[1])], 0, 9) }; }
+  ],
+  formulas: [
+    { title: "✖️ 乘除关系", items: [
+      { name: "乘法各部分", expr: "因数×因数＝积" },
+      { name: "求因数", expr: "一个因数＝积÷另一个因数" },
+      { name: "除法各部分", expr: "被除数÷除数＝商" },
+      { name: "求除数", expr: "除数＝被除数÷商" },
+      { name: "求被除数", expr: "被除数＝商×除数" }
+    ] },
+    { title: "📏 长度", items: [
+      { name: "米和厘米", expr: "1米＝100厘米" }
+    ] },
+    { title: "🔢 万以内", items: [
+      { name: "千", expr: "10个一百是一千" },
+      { name: "万", expr: "10个一千是一万" }
+    ] },
+    { title: "🔔 混合运算顺序", items: [
+      { name: "口诀", expr: "先乘除，后加减，有括号先算括号" }
+    ] }
   ]
 };

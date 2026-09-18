@@ -184,5 +184,40 @@ const GRADE = {
     () => ({ q: "sin30° = ?", a: "1/2", opts: ["1/2", "√3/2", "1", "√2/2"] }),
     () => ({ q: "掷骰子出偶数概率 ?", a: "1/2", opts: ["1/2", "1/3", "1/6", "2/3"] }),
     () => { const t = H.pick([["相似比2:3面积比4:9", "✓ 正确"], ["-5＞-2", "✗ 错误"], ["tan45°=1", "✓ 正确"], ["x²=9的解只有x=3", "✗ 错误"]]); return { q: t[0], a: t[1], opts: ["✓ 正确", "✗ 错误"] }; }
+  ],
+  formulas: [
+    { title: "🧮 一元二次方程", items: [
+      { name: "一般形式", expr: "ax²＋bx＋c＝0（a≠0）" },
+      { name: "求根公式", html: "x＝<span class=\"frac\"><span>-b±√<span class=\"rad\">(b²-4ac)</span></span><span>2a</span></span>", note: "a≠0，Δ≥0时可用" },
+      { name: "判别式", expr: "Δ＝b²-4ac：＞0两不等实根，＝0两相等，＜0无实根" },
+      { name: "韦达定理", expr: "x₁＋x₂＝-b/a，x₁x₂＝c/a" }
+    ] },
+    { title: "📈 二次函数", items: [
+      { name: "顶点式", expr: "y＝a(x-h)²＋k：顶点(h,k)，对称轴x＝h" },
+      { name: "开口", expr: "a＞0开口向上有最小值，a＜0开口向下有最大值" },
+      { name: "平移", expr: "左加右减，上加下减" }
+    ] },
+    { title: "⭕ 圆", items: [
+      { name: "垂径定理", expr: "垂直于弦的直径平分弦" },
+      { name: "圆周角", expr: "同弧圆周角＝圆心角的一半" },
+      { name: "切线", expr: "切线垂直于过切点的半径" },
+      { name: "弧长", html: "l＝<span class=\"frac\"><span>nπr</span><span>180</span></span>", note: "n是圆心角度数" },
+      { name: "扇形面积", html: "S＝<span class=\"frac\"><span>nπr²</span><span>360</span></span>" }
+    ] },
+    { title: "〰️ 反比例函数", items: [
+      { name: "一般形式", html: "y＝<span class=\"frac\"><span>k</span><span>x</span></span>", note: "k≠0" },
+      { name: "图象", expr: "k＞0在一三象限，k＜0在二四象限" },
+      { name: "|k|意义", expr: "|k|＝图上一点与坐标轴围成矩形的面积" }
+    ] },
+    { title: "🔍 相似与三角", items: [
+      { name: "面积比", expr: "面积比＝相似比²" },
+      { name: "正弦", html: "sinA＝<span class=\"frac\"><span>对边</span><span>斜边</span></span>" },
+      { name: "余弦", html: "cosA＝<span class=\"frac\"><span>邻边</span><span>斜边</span></span>" },
+      { name: "正切", html: "tanA＝<span class=\"frac\"><span>对边</span><span>邻边</span></span>" },
+      { name: "特殊值", expr: "sin30°＝1/2，tan45°＝1，sin60°＝√3/2" }
+    ] },
+    { title: "🎲 概率", items: [
+      { name: "古典概型", expr: "概率＝目标情况数÷所有等可能情况数" }
+    ] }
   ]
 };

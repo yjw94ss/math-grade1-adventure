@@ -159,6 +159,14 @@ sup{font-size:.62em}
 .opt.sel{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-deep)}
 .opt:disabled{cursor:default}
 .opt.correct:disabled{opacity:1}
+/* 公式手册 */
+.formula-search{width:100%;font-size:16px;padding:12px 14px;border-radius:12px;
+  border:2px solid var(--line);margin:6px 0 4px;background:#fff;font-family:inherit}
+.formula-group h3{margin:14px 0 6px;font-size:17px;color:var(--accent-deep)}
+.formula-item{background:var(--accent-soft);border-radius:12px;padding:10px 14px;margin:8px 0}
+.f-name{font-size:14px;font-weight:800;color:var(--muted)}
+.f-expr{font-size:21px;font-weight:700;margin-top:2px;font-family:Georgia,"Times New Roman","Songti SC","STSong","SimSun",serif}
+.f-note{font-size:13px;color:var(--muted);margin-top:2px}
 .grade-card{display:block;text-decoration:none;color:#fff;border-radius:22px;
   padding:22px 14px 18px;text-align:center;box-shadow:0 8px 20px rgba(0,0,0,.15);
   transition:transform .12s;position:relative;overflow:hidden}

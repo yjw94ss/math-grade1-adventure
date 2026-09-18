@@ -227,5 +227,20 @@ const GRADE = {
     () => { const a = H.r(21), b = H.r(21); return { q: `${a} ? ${b}`, a: a > b ? "＞" : a < b ? "＜" : "=", opts: ["＞", "＜", "="] }; },
     () => { const s = H.ri(1, 6), d = H.ri(1, 4); return { q: `${s}、${s + d}、${s + 2 * d}、?`, a: s + 3 * d, opts: H.salt([s + 3 * d], 0, 30) }; },
     () => { const y = H.ri(1, 5); return { q: `${y}元 = ? 角`, a: y * 10, opts: H.salt([y * 10], 0, 50) }; }
+  ],
+  formulas: [
+    { title: "➕ 加法与减法", items: [
+      { name: "加法各部分", expr: "加数＋加数＝和" },
+      { name: "求加数", expr: "和－一个加数＝另一个加数" },
+      { name: "减法各部分", expr: "被减数－减数＝差" },
+      { name: "求减数", expr: "减数＝被减数－差" },
+      { name: "求被减数", expr: "被减数＝减数＋差" }
+    ] },
+    { title: "🔟 凑十歌", items: [
+      { name: "凑成10", expr: "9要1，8要2，7要3，6要4，5要5", note: "看到9找1，看到8找2，先凑10再加剩下的" }
+    ] },
+    { title: "🔢 数位", items: [
+      { name: "两位数", expr: "15＝1个十＋5个一", note: "右边第一位是个位，第二位是十位" }
+    ] }
   ]
 };

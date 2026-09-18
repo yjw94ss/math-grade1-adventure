@@ -173,5 +173,33 @@ const GRADE = {
     () => { const m = H.ri(2, 5); return { q: `y = ${m}x + 1，x=2 时 y=?`, a: m * 2 + 1, opts: H.salt([m * 2 + 1], 1, 20) }; },
     () => { const p = H.pick([[12, "2√3"], [50, "5√2"], [27, "3√3"]]); return { q: `√${p[0]} = ?`, a: p[1], opts: [p[1], `√${p[0]}`, p[1].replace("√", "") + "√1", "√" + (p[0] + 1)] }; },
     () => { const s = H.ri(4, 12); return { q: `△ABC≌△DEF，AB=${s}，DE=?`, a: s, opts: H.salt([s], 1, 16) }; }
+  ],
+  formulas: [
+    { title: "🔺 全等判定", items: [
+      { name: "五种", expr: "SSS三边，SAS两边夹角，ASA两角夹边，AAS两角一对边，HL直角三角形" }
+    ] },
+    { title: "✖️ 幂与乘法", items: [
+      { name: "同底数幂", expr: "a^m·a^n＝a^(m+n)，a^m÷a^n＝a^(m-n)" },
+      { name: "幂的乘方", expr: "(a^m)^n＝a^(mn)" },
+      { name: "平方差", expr: "(a+b)(a-b)＝a²-b²" },
+      { name: "完全平方", expr: "(a+b)²＝a²+2ab+b²，(a-b)²＝a²-2ab+b²" }
+    ] },
+    { title: "➗ 分式与根式", items: [
+      { name: "分式条件", expr: "分母≠0；分子为0且分母不为0时值为0" },
+      { name: "根式条件", expr: "根号下必须≥0" },
+      { name: "根式乘法", expr: "√a·√b＝√ab（a,b≥0）" }
+    ] },
+    { title: "📐 勾股与四边形", items: [
+      { name: "勾股定理", expr: "a²＋b²＝c²（c为斜边）", note: "常见：3-4-5，6-8-10，5-12-13" },
+      { name: "平行四边形", expr: "对边平行相等，对角相等，对角线互相平分" },
+      { name: "矩形菱形", expr: "对角线相等→矩形；对角线垂直→菱形" },
+      { name: "内角和", expr: "n边形内角和＝(n-2)×180°" }
+    ] },
+    { title: "📈 一次函数与数据", items: [
+      { name: "一般形式", expr: "y＝kx＋b" },
+      { name: "k与b", expr: "k＞0上升，k＜0下降；b是与y轴交点纵坐标" },
+      { name: "平均数", expr: "平均数＝总数÷个数" },
+      { name: "方差", expr: "方差越小，数据越稳定" }
+    ] }
   ]
 };
