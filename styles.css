@@ -145,6 +145,13 @@ main{max-width:720px;margin:0 auto;padding:12px 12px 48px}
   box-shadow:0 3px 0 rgba(0,0,0,.15);margin-top:12px}
 .ad-cta:active{transform:translateY(2px);box-shadow:none}
 .grade-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:14px 0}
+/* 连线配对 */
+.match-wrap{display:flex;gap:16px;justify-content:center;width:100%;margin:6px 0}
+.match-col{display:flex;flex-direction:column;gap:10px}
+.match-col .opt{min-width:140px}
+.opt.sel{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-deep)}
+.opt:disabled{cursor:default}
+.opt.correct:disabled{opacity:1}
 .grade-card{display:block;text-decoration:none;color:#fff;border-radius:22px;
   padding:22px 14px 18px;text-align:center;box-shadow:0 8px 20px rgba(0,0,0,.15);
   transition:transform .12s;position:relative;overflow:hidden}

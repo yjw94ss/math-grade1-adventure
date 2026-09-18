@@ -146,6 +146,24 @@ const GRADE = {
         if (q === last) return this.gen(level, last);
         return { q, a: ans, opts: H.salt([ans], Math.max(1, ans - 8), ans + 8) };
       }
+    },
+    {
+      id: "danweilian", tab: "🔗 单位连线", title: "🔗 单位连线：两边相等",
+      type: "match", retry: "进率记牢：时分秒60，长度质量1000（米和厘米是100）",
+      gen() {
+        const pool = [["2时", "120分"], ["3分", "180秒"], ["1千米", "1000米"], ["2吨", "2000千克"], ["5分米", "50厘米"], ["4厘米", "40毫米"], ["1时30分", "90分"]];
+        return { q: "左边点一个，右边点和它相等的", pairs: H.shuf(pool).slice(0, 5) };
+      }
+    },
+    {
+      id: "paixu3", tab: "🔢 三位数排队", title: "🔢 三位数排排队",
+      type: "order", retry: "先比百位，百位相同再比十位",
+      gen() {
+        const set = new Set();
+        while (set.size < 4) set.add(H.ri(100, 999));
+        const dir = Math.random() < 0.5 ? "asc" : "desc";
+        return { q: dir === "asc" ? "从小到大依次点 👆" : "从大到小依次点 👆", cards: [...set].map((v) => ({ t: String(v), v })), dir };
+      }
     }
   ],
   makers: [

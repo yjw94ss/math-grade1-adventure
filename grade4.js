@@ -137,6 +137,30 @@ const GRADE = {
         if (q === last) return this.gen(level, last);
         return { q, a: real, opts: H.salt([real], Math.max(1, real - 5), real + 5) };
       }
+    },
+    {
+      id: "dinglvlian", tab: "🔗 定律连线", title: "🔗 定律连线：算式找方法",
+      type: "match", retry: "交换律换位置，结合律加括号，分配律分开乘",
+      gen() {
+        const pool = [
+          ["25×17×4=17×(25×4)", "交换律和结合律"],
+          ["99×36+36=100×36", "分配律·凑整"],
+          ["125×8×7", "先算125×8=1000"],
+          ["36×101", "36×100+36"],
+          ["a+b=b+a", "加法交换律"]
+        ];
+        return { q: "左边点算式，右边点它用的方法", pairs: H.shuf(pool).slice(0, 4) };
+      }
+    },
+    {
+      id: "paixu4", tab: "🔢 小数排队", title: "🔢 小数排排队",
+      type: "order", retry: "先比整数部分，再一位一位往下比",
+      gen() {
+        const pool = [0.5, 0.05, 0.3, 1.2, 2.05, 0.9];
+        const picks = H.shuf(pool).slice(0, 4);
+        const dir = Math.random() < 0.5 ? "asc" : "desc";
+        return { q: dir === "asc" ? "从小到大依次点 👆" : "从大到小依次点 👆", cards: picks.map((v) => ({ t: String(v), v })), dir };
+      }
     }
   ],
   makers: [

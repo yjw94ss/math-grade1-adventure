@@ -122,6 +122,25 @@ const GRADE = {
         if (q === last) return this.gen(level, last);
         return { q, a: ans, opts: H.shuf(opts) };
       }
+    },
+    {
+      id: "baifenlian", tab: "🔗 分百连线", title: "🔗 分数百分数连线",
+      type: "match", retry: "分母是100的分数就是百分之几",
+      gen() {
+        const pool = [["3/4", "75%"], ["1/2", "50%"], ["1/4", "25%"], ["4/5", "80%"], ["1/5", "20%"], ["7/10", "70%"], ["1/8", "12.5%"]];
+        return { q: "左边点分数，右边点和它相等的百分数", pairs: H.shuf(pool).slice(0, 5) };
+      }
+    },
+    {
+      id: "paixu6", tab: "🔢 数轴排队", title: "🔢 数轴排排队（含负数）",
+      type: "order", retry: "数轴上越往右越大；负数离0越远越小",
+      hint: "数轴越往右越大 · 负号后面越大，这个数越小",
+      gen() {
+        const set = new Set();
+        while (set.size < 4) set.add(H.pick([-5, -2.5, -0.5, 0, 2.5, 4, -3, 1.5]));
+        const dir = Math.random() < 0.5 ? "asc" : "desc";
+        return { q: dir === "asc" ? "从小到大依次点 👆" : "从大到小依次点 👆", cards: [...set].map((v) => ({ t: String(v), v })), dir };
+      }
     }
   ],
   makers: [

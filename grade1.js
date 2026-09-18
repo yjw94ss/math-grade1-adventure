@@ -188,6 +188,36 @@ const GRADE = {
         while (set.size < 4) set.add(Math.max(0, ans + H.ri(0, 6) - 3));
         return { q, extra, a: ans + unit, opts: H.shuf([...set]).map((v) => v + unit) };
       }
+    },
+    {
+      id: "lianxian", tab: "🔗 连线配对", title: "🔗 连线：算式找得数",
+      type: "match", retry: "再算一遍，这两个真是一对吗？",
+      gen() {
+        const used = new Set(), pairs = [];
+        let guard = 0;
+        while (pairs.length < 4 && guard++ < 120) {
+          const a = H.r(10), b = H.r(10);
+          const op = Math.random() < 0.5 ? "+" : "-";
+          const x = Math.max(a, b), y = Math.min(a, b);
+          const ans = op === "+" ? x + y : x - y;
+          if (ans > 10 || used.has(ans)) continue;
+          used.add(ans);
+          pairs.push([`${x} ${op} ${y}`, String(ans)]);
+        }
+        return { q: "左边点一道算式，右边点它的得数", pairs };
+      }
+    },
+    {
+      id: "paixu", tab: "🔢 排排队", title: "🔢 排排队：按顺序点",
+      type: "order", retry: "顺序不对，再看看 👀",
+      levels: [{ v: "10", label: "10以内" }, { v: "20", label: "20以内" }],
+      gen(level) {
+        const mx = level === "20" ? 20 : 10;
+        const set = new Set();
+        while (set.size < 4) set.add(H.r(mx + 1));
+        const dir = Math.random() < 0.5 ? "asc" : "desc";
+        return { q: dir === "asc" ? "从小到大依次点一遍 👆" : "从大到小依次点一遍 👆", cards: [...set].map((v) => ({ t: String(v), v })), dir };
+      }
     }
   ],
   makers: [

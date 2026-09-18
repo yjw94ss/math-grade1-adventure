@@ -130,6 +130,39 @@ const GRADE = {
         if (q === last) return this.gen(level, last);
         return { q, a: ans, opts: H.salt([ans], Math.max(0, ans - 500), ans + 500) };
       }
+    },
+    {
+      id: "koujuelian", tab: "🔗 口诀连线", title: "🔗 口诀连线：算式找得数",
+      type: "match", retry: "背背口诀再配对 🔔",
+      gen() {
+        const used = new Set(), pairs = [];
+        let guard = 0;
+        while (pairs.length < 3 && guard++ < 120) {
+          const a = H.ri(2, 9), b = H.ri(2, 9);
+          if (used.has(a * b)) continue;
+          used.add(a * b);
+          pairs.push([`${a}×${b}`, String(a * b)]);
+        }
+        guard = 0;
+        while (pairs.length < 5 && guard++ < 120) {
+          const a = H.ri(2, 9), b = H.ri(2, 9);
+          if (used.has(b)) continue;
+          used.add(b);
+          pairs.push([`${a * b}÷${a}`, String(b)]);
+        }
+        return { q: "左边点算式，右边点得数", pairs };
+      }
+    },
+    {
+      id: "shuzimi", tab: "🕵️ 数字谜", title: "🕵️ 数字谜：□里是几？",
+      type: "pad", padMax: 9, retry: "把□想成x，倒着算回去 🔍",
+      gen() {
+        const T = H.ri(35, 99), b = H.ri(12, 29), a = T - b;
+        if (a < 10 || a > 99) return this.gen();
+        const s = String(a);
+        if (Math.random() < 0.5) return { q: `□${s[1]} + ${b} = ${T}，□ = ?`, a: Number(s[0]) };
+        return { q: `${s[0]}□ + ${b} = ${T}，□ = ?`, a: Number(s[1]) };
+      }
     }
   ],
   makers: [
@@ -138,6 +171,7 @@ const GRADE = {
     () => { const a = H.ri(20, 80), b = H.ri(11, 49); return { q: `${a} + ${b} = ?`, a: a + b, opts: H.salt([a + b], a + b - 12, a + b + 12) }; },
     () => { const m = H.ri(1, 9); return { q: `${m}米 = ? 厘米`, a: m * 100 + "厘米", opts: H.salt([m * 100], m * 100 - 30, m * 100 + 30).map((v) => v + "厘米") }; },
     () => { const a = H.ri(2, 9), b = H.ri(2, 9), c = H.ri(2, 15); return { q: `${a} × ${b} + ${c} = ?`, a: a * b + c, opts: H.salt([a * b + c], a * b + c - 10, a * b + c + 10) }; },
-    () => { const a = 100 * H.ri(1, 9), b = 100 * H.ri(1, 9); return { q: `${a} + ${b} = ?`, a: a + b, opts: H.salt([a + b], a + b - 400, a + b + 400) }; }
+    () => { const a = 100 * H.ri(1, 9), b = 100 * H.ri(1, 9); return { q: `${a} + ${b} = ?`, a: a + b, opts: H.salt([a + b], a + b - 400, a + b + 400) }; },
+    () => { const T = H.ri(35, 99), b = H.ri(12, 29), a = T - b; if (a < 10 || a > 99) return { q: "4□+27=69，□=?", a: 4, opts: [4, 2, 6, 9] }; const s = String(a); return Math.random() < 0.5 ? { q: `□${s[1]}+${b}=${T}，□=?`, a: Number(s[0]), opts: H.salt([Number(s[0])], 0, 9) } : { q: `${s[0]}□+${b}=${T}，□=?`, a: Number(s[1]), opts: H.salt([Number(s[1])], 0, 9) }; }
   ]
 };

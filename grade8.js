@@ -146,6 +146,24 @@ const GRADE = {
         if (q === last) return this.gen(level, last);
         return { q, a: ans, opts: H.shuf(opts) };
       }
+    },
+    {
+      id: "gongshilian", tab: "🔗 公式连线", title: "🔗 公式连线：展开找结果",
+      type: "match", retry: "平方差、完全平方、幂的运算法则，对号入座",
+      gen() {
+        const pool = [["(x+3)(x-3)", "x²-9"], ["(x+2)²", "x²+4x+4"], ["x²-16", "(x+4)(x-4)"], ["a³·a²", "a^5"], ["√12", "2√3"], ["x²+6x+9", "(x+3)²"]];
+        return { q: "左边点题目，右边点它的结果", pairs: H.shuf(pool).slice(0, 5) };
+      }
+    },
+    {
+      id: "paixu8", tab: "🔢 近似数排队", title: "🔢 无理数近似排排队",
+      type: "order", retry: "√2≈1.414，√3≈1.732，π≈3.14，√5≈2.236",
+      hint: "√2≈1.414 · √3≈1.732 · π≈3.14 · √5≈2.236",
+      gen() {
+        const pool = [{ t: "√2", v: 1.414 }, { t: "√3", v: 1.732 }, { t: "π", v: 3.14 }, { t: "√5", v: 2.236 }, { t: "1/2", v: 0.5 }];
+        const dir = Math.random() < 0.5 ? "asc" : "desc";
+        return { q: dir === "asc" ? "从小到大依次点 👆" : "从大到小依次点 👆", cards: H.shuf(pool).slice(0, 4), dir };
+      }
     }
   ],
   makers: [

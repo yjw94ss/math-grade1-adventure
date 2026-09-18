@@ -164,6 +164,24 @@ const GRADE = {
         if (q === last) return this.gen(level, last);
         return { q, a: ans, opts: ["＞", "＜", "="] };
       }
+    },
+    {
+      id: "zhengshilian", tab: "🔗 整式连线", title: "🔗 整式连线：化简找结果",
+      type: "match", retry: "合并同类项、去括号，一步一步来",
+      gen() {
+        const pool = [["3x+5x", "8x"], ["2(3x-1)", "6x-2"], ["5a-2(a-3)", "3a+6"], ["-(-3)", "3"], ["|-5|", "5"], ["x+7=15", "x=8"]];
+        return { q: "左边点题目，右边点它的结果", pairs: H.shuf(pool).slice(0, 4) };
+      }
+    },
+    {
+      id: "paixu7", tab: "🔢 有理数排队", title: "🔢 有理数排排队",
+      type: "order", retry: "正数都比负数大；两个负数比绝对值，绝对值大的反而小",
+      gen() {
+        const set = new Set();
+        while (set.size < 5) set.add(H.ri(-10, 10));
+        const dir = Math.random() < 0.5 ? "asc" : "desc";
+        return { q: dir === "asc" ? "从小到大依次点 👆" : "从大到小依次点 👆", cards: [...set].map((v) => ({ t: String(v), v })), dir };
+      }
     }
   ],
   makers: [

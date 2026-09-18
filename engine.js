@@ -205,6 +205,100 @@ GRADE.modules.forEach((mod) => {
     mod._next();
     return;
   }
+  // 配对模块（连线）：gen -> {q, pairs:[[左,右],...]}
+  if (mod.type === "match") {
+    const level = () => { const r = c.querySelector(`input[name="lv-${mod.id}"]:checked`); return r ? r.value : null; };
+    mod._next = () => {
+      const g = mod.gen(level(), mod._last);
+      mod._last = g.q;
+      box.dsp.style.display = "none";
+      box.q.textContent = g.q || "左边点一个，右边找配对";
+      box.vis.style.display = "none"; box.ext.innerHTML = "";
+      box.msg.textContent = ""; box.msg.className = "msg";
+      box.opts.innerHTML = "";
+      const wrap = document.createElement("div");
+      wrap.className = "match-wrap";
+      const lc = document.createElement("div"); lc.className = "match-col";
+      const rc = document.createElement("div"); rc.className = "match-col";
+      wrap.appendChild(lc); wrap.appendChild(rc); box.opts.appendChild(wrap);
+      let sel = null, done = 0;
+      const total = g.pairs.length;
+      g.pairs.forEach(([l], i) => {
+        const b = document.createElement("button");
+        b.className = "opt"; b.textContent = l; b.dataset.side = "L"; b.dataset.k = i;
+        b.onclick = () => {
+          if (b.disabled) return;
+          lc.querySelectorAll(".opt").forEach((x) => x.classList.remove("sel"));
+          b.classList.add("sel"); sel = i;
+        };
+        lc.appendChild(b);
+      });
+      H.shuf(g.pairs.map((_, i) => i)).forEach((i) => {
+        const b = document.createElement("button");
+        b.className = "opt"; b.textContent = g.pairs[i][1]; b.dataset.side = "R"; b.dataset.k = i;
+        b.onclick = () => {
+          if (b.disabled) return;
+          if (sel === null) { box.msg.textContent = "先点左边一个 👈"; box.msg.className = "msg bad"; return; }
+          if (Number(b.dataset.k) === sel) {
+            b.classList.add("correct"); b.disabled = true;
+            const lb = lc.querySelector('[data-k="' + sel + '"]');
+            if (lb) { lb.classList.add("correct"); lb.classList.remove("sel"); lb.disabled = true; }
+            sel = null; done++;
+            if (done >= total) {
+              box.msg.textContent = "全部配对成功！🎉 " + addStar(mod.id);
+              box.msg.className = "msg good"; speak("全部配对成功");
+              setTimeout(() => mod._next(), 1100);
+            } else { box.msg.textContent = `配对成功 ${done}/${total} ✅`; box.msg.className = "msg good"; }
+          } else {
+            b.classList.add("wrong"); setTimeout(() => b.classList.remove("wrong"), 650);
+            box.msg.textContent = (mod.retry || "再想想，这两个是一对吗？"); box.msg.className = "msg bad";
+          }
+        };
+        rc.appendChild(b);
+      });
+    };
+    c.querySelectorAll(`input[name="lv-${mod.id}"]`).forEach((r) => (r.onchange = () => mod._next()));
+    mod._next();
+    return;
+  }
+  // 排序模块：gen -> {q, cards:[{t:显示, v:数值}], dir:'asc'|'desc'}
+  if (mod.type === "order") {
+    const level = () => { const r = c.querySelector(`input[name="lv-${mod.id}"]:checked`); return r ? r.value : null; };
+    mod._next = () => {
+      const g = mod.gen(level(), mod._last);
+      mod._last = g.q;
+      box.dsp.style.display = "none";
+      box.q.textContent = g.q;
+      box.vis.style.display = "none"; box.ext.innerHTML = "";
+      box.msg.textContent = ""; box.msg.className = "msg";
+      box.opts.innerHTML = "";
+      const sorted = [...g.cards].sort((a, b) => (g.dir === "desc" ? b.v - a.v : a.v - b.v));
+      mod._order = { seq: sorted.map((x) => x.t) };
+      let idx = 0;
+      H.shuf(g.cards).forEach((card) => {
+        const b = document.createElement("button");
+        b.className = "opt"; b.textContent = card.t;
+        b.onclick = () => {
+          if (b.disabled) return;
+          if (card.t === mod._order.seq[idx]) {
+            b.classList.add("correct"); b.disabled = true; idx++;
+            if (idx >= mod._order.seq.length) {
+              box.msg.textContent = "排序正确！🎉 " + addStar(mod.id);
+              box.msg.className = "msg good"; speak("排序正确");
+              setTimeout(() => mod._next(), 1100);
+            }
+          } else {
+            b.classList.add("wrong"); setTimeout(() => b.classList.remove("wrong"), 650);
+            box.msg.textContent = (mod.retry || "顺序不对，再看看 👀"); box.msg.className = "msg bad";
+          }
+        };
+        box.opts.appendChild(b);
+      });
+    };
+    c.querySelectorAll(`input[name="lv-${mod.id}"]`).forEach((r) => (r.onchange = () => mod._next()));
+    mod._next();
+    return;
+  }
   // 自定义模块（钟表等）
   if (mod.type === "custom") {
     mod.render({ box, card: c, addStar, speak, H, data, save });

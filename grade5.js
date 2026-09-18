@@ -169,6 +169,23 @@ const GRADE = {
         while (set.size < 4) set.add(Math.max(1, ans + (H.ri(0, 6) - 3) * (ans > 500 ? 200 : 6)));
         return { q, a: unit ? ans + unit : ans, opts: H.shuf([...set]).map((v) => (unit ? v + unit : v)) };
       }
+    },
+    {
+      id: "fangchenglian", tab: "🔗 方程连线", title: "🔗 方程连线：方程找解",
+      type: "match", retry: "把解代回方程检验一下",
+      gen() {
+        const pool = [["x+7=15", "x=8"], ["x-9=21", "x=30"], ["3x=27", "x=9"], ["x÷4=6", "x=24"], ["2x+5=13", "x=4"], ["5x-15=20", "x=7"]];
+        return { q: "左边点方程，右边点它的解", pairs: H.shuf(pool).slice(0, 4) };
+      }
+    },
+    {
+      id: "paixu5", tab: "🔢 分数排队", title: "🔢 分数排排队",
+      type: "order", retry: "通分成同分母再比，或化成小数比",
+      gen() {
+        const pool = [{ t: "1/2", v: 0.5 }, { t: "3/4", v: 0.75 }, { t: "2/3", v: 0.667 }, { t: "5/6", v: 0.833 }, { t: "3/5", v: 0.6 }, { t: "7/8", v: 0.875 }];
+        const dir = Math.random() < 0.5 ? "asc" : "desc";
+        return { q: dir === "asc" ? "从小到大依次点 👆" : "从大到小依次点 👆", cards: H.shuf(pool).slice(0, 4), dir };
+      }
     }
   ],
   makers: [
