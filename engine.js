@@ -25,6 +25,21 @@ const H = {
 window.H = H;
 const $ = (id) => document.getElementById(id);
 
+// 数学排版：分数堆叠、上标、根号加横线、单个小写字母变斜体（纯展示，不影响答案比对）
+function pretty(s) {
+  s = String(s)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/(^|[^A-Za-z])([a-z])(?![A-Za-z])/g, "$1<i>$2</i>")
+    .replace(/\^(-?\d+)/g, "<sup>$1</sup>")
+    .replace(/√(\d+|\([^()]*\))/g, "√<span class=\"rad\">$1</span>")
+    .replace(/(\d+)\s*\/\s*(\d+)/g, "<span class=\"frac\"><span>$1</span><span>$2</span></span>")
+    .replace(/(\d+)\s*\/\s*(\([^()]*\))/g, "<span class=\"frac\"><span>$1</span><span>$2</span></span>");
+  return s;
+}
+window.__pretty = pretty; // 测试钩子
+
 // ---------- 存档（每个年级独立） ----------
 const store = {
   get() { try { return JSON.parse(localStorage.getItem(GRADE.storeKey) || "{}"); } catch { return {}; } },
@@ -128,9 +143,9 @@ addTab("home", "🏠 今天玩什么", true);
 
 // ---------- 标准模块 ----------
 function paintOpts(mod, box, q) {
-  if (q.display !== undefined) box.dsp.textContent = q.display;
+  if (q.display !== undefined) { box.dsp.innerHTML = pretty(q.display); box.dsp.style.display = ""; }
   else box.dsp.style.display = "none";
-  box.q.textContent = q.q;
+  box.q.innerHTML = pretty(q.q);
   box.vis.textContent = q.visual || "";
   box.vis.style.display = q.visual ? "" : "none";
   box.ext.innerHTML = q.extra || "";
@@ -138,7 +153,7 @@ function paintOpts(mod, box, q) {
   box.opts.innerHTML = "";
   q.opts.forEach((v) => {
     const b = document.createElement("button");
-    b.className = "opt"; b.textContent = v;
+    b.className = "opt"; b.innerHTML = pretty(v); b.dataset.raw = v;
     b.onclick = () => {
       if (String(v) === String(q.a)) {
         b.classList.add("correct");
@@ -175,8 +190,8 @@ GRADE.modules.forEach((mod) => {
     mod._next = () => {
       const q = mod.gen(level(), mod._last);
       mod._last = q.q;
-      if (q.display !== undefined) box.dsp.textContent = q.display; else box.dsp.style.display = "none";
-      box.q.textContent = q.q;
+      if (q.display !== undefined) { box.dsp.innerHTML = pretty(q.display); box.dsp.style.display = ""; } else box.dsp.style.display = "none";
+      box.q.innerHTML = pretty(q.q);
       box.vis.textContent = q.visual || ""; box.vis.style.display = q.visual ? "" : "none";
       box.msg.textContent = ""; box.msg.className = "msg";
       box.padAns = q.a;
@@ -212,7 +227,7 @@ GRADE.modules.forEach((mod) => {
       const g = mod.gen(level(), mod._last);
       mod._last = g.q;
       box.dsp.style.display = "none";
-      box.q.textContent = g.q || "左边点一个，右边找配对";
+      box.q.innerHTML = pretty(g.q || "左边点一个，右边找配对");
       box.vis.style.display = "none"; box.ext.innerHTML = "";
       box.msg.textContent = ""; box.msg.className = "msg";
       box.opts.innerHTML = "";
@@ -225,7 +240,7 @@ GRADE.modules.forEach((mod) => {
       const total = g.pairs.length;
       g.pairs.forEach(([l], i) => {
         const b = document.createElement("button");
-        b.className = "opt"; b.textContent = l; b.dataset.side = "L"; b.dataset.k = i;
+        b.className = "opt"; b.innerHTML = pretty(l); b.dataset.side = "L"; b.dataset.k = i;
         b.onclick = () => {
           if (b.disabled) return;
           lc.querySelectorAll(".opt").forEach((x) => x.classList.remove("sel"));
@@ -235,7 +250,7 @@ GRADE.modules.forEach((mod) => {
       });
       H.shuf(g.pairs.map((_, i) => i)).forEach((i) => {
         const b = document.createElement("button");
-        b.className = "opt"; b.textContent = g.pairs[i][1]; b.dataset.side = "R"; b.dataset.k = i;
+        b.className = "opt"; b.innerHTML = pretty(g.pairs[i][1]); b.dataset.side = "R"; b.dataset.k = i;
         b.onclick = () => {
           if (b.disabled) return;
           if (sel === null) { box.msg.textContent = "先点左边一个 👈"; box.msg.className = "msg bad"; return; }
@@ -268,7 +283,7 @@ GRADE.modules.forEach((mod) => {
       const g = mod.gen(level(), mod._last);
       mod._last = g.q;
       box.dsp.style.display = "none";
-      box.q.textContent = g.q;
+      box.q.innerHTML = pretty(g.q);
       box.vis.style.display = "none"; box.ext.innerHTML = "";
       box.msg.textContent = ""; box.msg.className = "msg";
       box.opts.innerHTML = "";
@@ -277,7 +292,7 @@ GRADE.modules.forEach((mod) => {
       let idx = 0;
       H.shuf(g.cards).forEach((card) => {
         const b = document.createElement("button");
-        b.className = "opt"; b.textContent = card.t;
+        b.className = "opt"; b.innerHTML = pretty(card.t); b.dataset.t = card.t;
         b.onclick = () => {
           if (b.disabled) return;
           if (card.t === mod._order.seq[idx]) {
@@ -310,7 +325,7 @@ GRADE.modules.forEach((mod) => {
       const it = mod.bank[mod._queue[mod._queue.length - 1]];
       mod._bank = { cur: it };
       box.dsp.style.display = "none";
-      box.q.textContent = it.q;
+      box.q.innerHTML = pretty(it.q);
       box.vis.style.display = "none";
       box.ext.innerHTML = `<div>📜 ${it.src}</div><div>真题 ${mod.bank.length - mod._queue.length + 1}/${mod.bank.length} · 已答对 ${mod._right}</div>`;
       box.msg.textContent = ""; box.msg.className = "msg";
@@ -318,7 +333,7 @@ GRADE.modules.forEach((mod) => {
       box.opts.innerHTML = "";
       it.opts.forEach((v) => {
         const b = document.createElement("button");
-        b.className = "opt"; b.textContent = v;
+        b.className = "opt"; b.innerHTML = pretty(v); b.dataset.raw = v;
         b.onclick = () => {
           box.opts.querySelectorAll(".opt").forEach((x) => (x.disabled = true));
           mod._queue.pop();
@@ -331,7 +346,7 @@ GRADE.modules.forEach((mod) => {
             box.msg.textContent = `正确答案是 ${it.a} 📝`;
             box.msg.className = "msg bad";
           }
-          box.tip.textContent = "💡 解析：" + it.tip;
+          box.tip.innerHTML = "💡 解析：" + pretty(it.tip);
           setTimeout(() => mod._next(), 2800);
         };
         box.opts.appendChild(b);
@@ -379,11 +394,11 @@ addTab("quest", `🏆 闯关${QN}题`);
     $("questInfo").textContent = st.i >= QN ? `完成！${QN}题闯关结束，最高连击 x${st.best} 🔥` : (st.cur ? `第 ${st.i + 1}/${QN} 题，连击 x${st.streak}` : `共 ${QN} 题，点开始`);
     if (st.i >= QN) { $("questQ").textContent = "🎉 通关！+5⭐"; $("questOpts").innerHTML = ""; return; }
     if (!st.cur) return;
-    $("questQ").textContent = st.cur.q;
+    $("questQ").innerHTML = pretty(st.cur.q);
     $("questOpts").innerHTML = "";
     st.cur.opts.forEach((v) => {
       const b = document.createElement("button");
-      b.className = "opt"; b.textContent = v;
+      b.className = "opt"; b.innerHTML = pretty(v); b.dataset.raw = v;
       b.onclick = () => answer(v);
       $("questOpts").appendChild(b);
     });
