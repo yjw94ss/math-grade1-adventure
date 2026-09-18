@@ -299,6 +299,47 @@ GRADE.modules.forEach((mod) => {
     mod._next();
     return;
   }
+  // 真题库模块：mod.bank = [{q, a, opts, src, tip}]，不放回抽完一轮
+  if (mod.type === "bank") {
+    if (!box.tip) { box.tip = document.createElement("p"); box.tip.className = "hint"; box.tip.style.textAlign = "left"; c.appendChild(box.tip); }
+    mod._next = () => {
+      if (!mod._queue || !mod._queue.length) {
+        mod._queue = H.shuf(mod.bank.map((_, i) => i));
+        mod._right = 0;
+      }
+      const it = mod.bank[mod._queue[mod._queue.length - 1]];
+      mod._bank = { cur: it };
+      box.dsp.style.display = "none";
+      box.q.textContent = it.q;
+      box.vis.style.display = "none";
+      box.ext.innerHTML = `<div>📜 ${it.src}</div><div>真题 ${mod.bank.length - mod._queue.length + 1}/${mod.bank.length} · 已答对 ${mod._right}</div>`;
+      box.msg.textContent = ""; box.msg.className = "msg";
+      box.tip.textContent = "";
+      box.opts.innerHTML = "";
+      it.opts.forEach((v) => {
+        const b = document.createElement("button");
+        b.className = "opt"; b.textContent = v;
+        b.onclick = () => {
+          box.opts.querySelectorAll(".opt").forEach((x) => (x.disabled = true));
+          mod._queue.pop();
+          if (String(v) === String(it.a)) {
+            b.classList.add("correct"); mod._right++;
+            box.msg.textContent = "真题拿下！🎉 " + addStar(mod.id);
+            box.msg.className = "msg good"; speak("答对了");
+          } else {
+            b.classList.add("wrong");
+            box.msg.textContent = `正确答案是 ${it.a} 📝`;
+            box.msg.className = "msg bad";
+          }
+          box.tip.textContent = "💡 解析：" + it.tip;
+          setTimeout(() => mod._next(), 2800);
+        };
+        box.opts.appendChild(b);
+      });
+    };
+    mod._next();
+    return;
+  }
   // 自定义模块（钟表等）
   if (mod.type === "custom") {
     mod.render({ box, card: c, addStar, speak, H, data, save });
