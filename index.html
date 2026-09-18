@@ -14,9 +14,12 @@
 <main style="max-width:720px;margin:0 auto;padding:12px 12px 40px">
   <div class="card hero">
     <h1>选一个年级，开始探险！</h1>
-    <p>1-6 年级 · 每天15分钟：3分钟热身 + 7分钟挑战 + 5分钟生活任务</p>
+    <p>小学1-6年级 · 初中初一到初三 · 每天15分钟：3分钟热身 + 7分钟挑战 + 5分钟生活任务</p>
   </div>
-  <div class="grade-grid" id="grades"></div>
+  <div class="hall-h">📚 小学</div>
+  <div class="grade-grid" id="gradesX"></div>
+  <div class="hall-h">🚀 初中</div>
+  <div class="grade-grid" id="gradesZ"></div>
   <div class="card tip">
     <h2>💡 给家长</h2>
     <p>每个年级进度独立保存；先从孩子所在年级开始，吃力就退回上一年级玩几天，不丢人。</p>
@@ -31,14 +34,21 @@ const GRADES = [
   { n: 3, emoji: "🐤", topics: "万以内加减 · 时分秒 · 周长 · 分数初步 · 倍", key: "mathAdv3" },
   { n: 4, emoji: "🦊", topics: "大数 · 笔算乘除 · 运算定律 · 小数 · 平均数", key: "mathAdv4" },
   { n: 5, emoji: "🐯", topics: "小数乘除 · 方程 · 面积 · 因数倍数 · 分数 · 体积", key: "mathAdv5" },
-  { n: 6, emoji: "🦁", topics: "分数乘除 · 比与比例 · 百分数 · 圆 · 圆柱圆锥", key: "mathAdv6" }
+  { n: 6, emoji: "🦁", topics: "分数乘除 · 比与比例 · 百分数 · 圆 · 圆柱圆锥", key: "mathAdv6" },
+  { n: 7, name: "初一", emoji: "🐺", topics: "有理数 · 整式 · 一元一次方程 · 平行线 · 实数", key: "mathAdv7" },
+  { n: 8, name: "初二", emoji: "🦅", topics: "全等 · 幂与公式 · 分式 · 勾股 · 一次函数", key: "mathAdv8" },
+  { n: 9, name: "初三", emoji: "🐲", topics: "一元二次方程 · 二次函数 · 圆 · 相似 · 概率", key: "mathAdv9" }
 ];
 const total = (k) => { try { return JSON.parse(localStorage.getItem(k) || "{}").total || 0; } catch { return 0; } };
-document.getElementById("grades").innerHTML = GRADES.map((g) =>
-  `<a class="grade-card" href="grade${g.n}.html"><div class="g-emoji">${g.emoji}</div><div class="g-name">${g.n}年级</div><div class="g-topics">${g.topics}</div><div class="g-stars">⭐ ${total(g.key)}</div></a>`
+const gname = (g) => g.name || (g.n + "年级");
+document.getElementById("gradesX").innerHTML = GRADES.filter((g) => g.n <= 6).map((g) =>
+  `<a class="grade-card" href="grade${g.n}.html"><div class="g-emoji">${g.emoji}</div><div class="g-name">${gname(g)}</div><div class="g-topics">${g.topics}</div><div class="g-stars">⭐ ${total(g.key)}</div></a>`
+).join("");
+document.getElementById("gradesZ").innerHTML = GRADES.filter((g) => g.n >= 7).map((g) =>
+  `<a class="grade-card" href="grade${g.n}.html"><div class="g-emoji">${g.emoji}</div><div class="g-name">${gname(g)}</div><div class="g-topics">${g.topics}</div><div class="g-stars">⭐ ${total(g.key)}</div></a>`
 ).join("");
 document.getElementById("starAll").textContent = GRADES.reduce((s, g) => s + total(g.key), 0);
-if (window.AdSlot) window.AdSlot.mountHub(document.getElementById("grades")); // 示例广告位（演示用）
+if (window.AdSlot) window.AdSlot.mountHub(document.getElementById("gradesX")); // 示例广告位（演示用）
 </script>
 </body>
 </html>

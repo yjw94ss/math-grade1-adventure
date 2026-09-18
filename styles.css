@@ -155,6 +155,13 @@ main{max-width:720px;margin:0 auto;padding:12px 12px 48px}
 .grade-card:nth-child(4){background:linear-gradient(135deg,#A47FFF,#6D28D9)}
 .grade-card:nth-child(5){background:linear-gradient(135deg,#FB6F92,#BE123C)}
 .grade-card:nth-child(6){background:linear-gradient(135deg,#EAB308,#A87400)}
+#gradesZ .grade-card:nth-child(1){background:linear-gradient(135deg,#22D3EE,#0891B2)}
+#gradesZ .grade-card:nth-child(2){background:linear-gradient(135deg,#818CF8,#4F46E5)}
+#gradesZ .grade-card:nth-child(3){background:linear-gradient(135deg,#FB923C,#C2410C)}
+.hall-h{font-size:19px;font-weight:900;margin:14px 4px 2px;color:var(--ink)}
+body[data-grade="7"]{--accent:#0891B2;--accent-deep:#0E7490;--accent-soft:#E0F7FC;--line:#9ADCED}
+body[data-grade="8"]{--accent:#4F46E5;--accent-deep:#3730A3;--accent-soft:#E9E8FF;--line:#BDB9FB}
+body[data-grade="9"]{--accent:#EA580C;--accent-deep:#9A3412;--accent-soft:#FFEDDF;--line:#F5B98A}
 .g-emoji{font-size:52px;filter:drop-shadow(0 3px 3px rgba(0,0,0,.25));animation:float 2.6s ease-in-out infinite}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
 .g-name{font-size:24px;font-weight:900;margin:8px 0 4px;text-shadow:0 1px 3px rgba(0,0,0,.25)}
